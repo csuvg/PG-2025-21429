@@ -1,0 +1,16 @@
+{
+  "name": "mirai-utils",
+  "version": "1.0.0",
+  "description": "Utility modules for encryption and cryptography",
+  "type": "module",
+  "keywords": [
+    "crypto",
+    "encryption",
+    "utils"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  }
+}

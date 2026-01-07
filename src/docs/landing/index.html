@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Mirai 未来 - Applications Integrator System</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://res.cloudinary.com/dpteqanni/image/upload/v1761255661/mirai-logo_dp6izc.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #6366f1;
+        --primary-dark: #4f46e5;
+        --secondary-color: #8b5cf6;
+        --accent-color: #06b6d4;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --error-color: #ef4444;
+
+        --bg-primary: #0f0f23;
+        --bg-secondary: #1a1a2e;
+        --bg-tertiary: #16213e;
+        --bg-card: #1e293b;
+        --bg-hover: #334155;
+
+        --text-primary: #ffffff;
+        --text-secondary: #ffffff;
+        --text-muted: #e2e8f0;
+        --text-title: #c4b5fd;
+
+        --border-color: #334155;
+        --border-hover: #475569;
+
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+        --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+        --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Instrument Sans", sans-serif;
+        font-optical-sizing: auto;
+        font-variation-settings: "wdth" 100;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      /* Header */
+      .header {
+        background: rgb(15, 15, 35, 0.9);
+        border-bottom: 1px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        padding-top: env(safe-area-inset-top);
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          background: rgb(15, 15, 35);
+          /* Remove transparency and blur effect for mobile */
+          backdrop-filter: none;
+        }
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+      }
+
+      @media (max-width: 768px) {
+        .nav {
+          padding: 2rem 0;
+          height: 3rem;
+        }
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      .logo-image {
+        height: 40px;
+        width: auto;
+        object-fit: contain;
+      }
+
+      .logo-text {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary-color);
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 5rem 0 4rem;
+        text-align: center;
+        background: linear-gradient(
+          -45deg,
+          #020617,
+          #1e1b4b,
+          #4c1d95,
+          #312e81,
+          #1e1b4b,
+          #020617
+        );
+        background-size: 400% 400%;
+        animation: gradientShift 12s ease infinite;
+        position: relative;
+        overflow: hidden;
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 50%,
+            rgba(139, 92, 246, 0.25) 0%,
+            rgba(139, 92, 246, 0.1) 25%,
+            transparent 60%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(59, 130, 246, 0.25) 0%,
+            rgba(59, 130, 246, 0.1) 25%,
+            transparent 60%
+          ),
+          radial-gradient(
+            circle at 40% 20%,
+            rgba(168, 85, 247, 0.2) 0%,
+            rgba(168, 85, 247, 0.08) 25%,
+            transparent 60%
+          );
+        animation: pulse 6s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: linear-gradient(
+            90deg,
+            rgba(139, 92, 246, 0.08) 1px,
+            transparent 1px
+          ),
+          linear-gradient(rgba(139, 92, 246, 0.08) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: gridMove 20s linear infinite;
+        z-index: 1;
+      }
+
+      @keyframes gridMove {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(50px, 50px);
+        }
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+      }
+
+      .hero-logo {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: center;
+      }
+
+      .hero-logo-image {
+        height: 120px;
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        background: linear-gradient(
+          135deg,
+          #ede9fe 0%,
+          #d1c8f9 25%,
+          #c7d2fe 50%,
+          #a78bfa 75%,
+          #a78bfa 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+        filter: drop-shadow(0 0 10px rgba(199, 210, 254, 0.2));
+      }
+
+      .hero .subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero .description {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        margin-bottom: 3rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.5rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+
+      .btn-primary {
+        background: var(--gradient-primary);
+        color: white;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .btn-secondary {
+        background: var(--bg-card);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+      }
+
+      .btn-secondary:hover {
+        background: var(--bg-hover);
+        border-color: var(--border-hover);
+      }
+
+      /* Section Styles */
+      .section {
+        padding: 5rem 0;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 1rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .section-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 3rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .architecture-diagram {
+        margin: 3rem auto;
+        text-align: center;
+        max-width: 1200px;
+      }
+
+      .diagram-image {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+        border: 1px solid var(--border-color);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .diagram-image:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 50px rgba(139, 92, 246, 0.3);
+      }
+
+      /* Why Mirai Section */
+      .why-mirai-section {
+        background: linear-gradient(
+          135deg,
+          rgba(139, 92, 246, 0.05) 0%,
+          rgba(59, 130, 246, 0.05) 100%
+        );
+        position: relative;
+        overflow: hidden;
+      }
+
+      .why-mirai-section::before {
+        content: "未来";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20rem;
+        font-weight: 700;
+        color: rgba(139, 92, 246, 0.03);
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .why-mirai-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .why-mirai-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .mirai-pronunciation {
+        font-size: 1.2rem;
+        color: var(--primary-color);
+        font-weight: 500;
+        margin-top: 0.5rem;
+        font-style: italic;
+      }
+
+      .mirai-explanation {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .mirai-main-text {
+        font-size: 1.3rem;
+        line-height: 1.8;
+        color: var(--text-primary);
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: var(--bg-card);
+        border-radius: 12px;
+        border-left: 4px solid var(--primary-color);
+      }
+
+      .mirai-vision-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+
+      .vision-card {
+        background: var(--bg-card);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+        text-align: center;
+      }
+
+      .vision-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+        border-color: var(--primary-color);
+      }
+
+      .vision-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: white;
+      }
+
+      .vision-card h3 {
+        font-size: 1.3rem;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+      }
+
+      .vision-card p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      .mirai-quote {
+        background: linear-gradient(
+          135deg,
+          rgba(139, 92, 246, 0.1),
+          rgba(59, 130, 246, 0.1)
+        );
+        padding: 2.5rem;
+        border-radius: 12px;
+        margin-top: 3rem;
+        position: relative;
+        border-left: 4px solid var(--primary-color);
+      }
+
+      .quote-icon {
+        font-size: 2rem;
+        color: var(--primary-color);
+        opacity: 0.3;
+        position: absolute;
+        top: 1rem;
+        left: 1.5rem;
+      }
+
+      .mirai-quote p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: var(--text-primary);
+        font-style: italic;
+        margin: 0;
+        padding-left: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .hero {
+          min-height: 100vh;
+          padding: 6rem 0 3rem;
+        }
+
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .hero h2 {
+          font-size: 1.2rem;
+        }
+
+        .hero .subtitle {
+          font-size: 1rem;
+        }
+
+        .hero .description {
+          font-size: 0.95rem;
+        }
+
+        .why-mirai-section::before {
+          font-size: 10rem;
+        }
+
+        .mirai-main-text {
+          font-size: 1.1rem;
+          padding: 1.5rem;
+        }
+
+        .mirai-vision-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .mirai-quote p {
+          font-size: 1rem;
+          padding-left: 1rem;
+        }
+      }
+
+      /* Cards */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .api-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 1rem;
+        padding: 2rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--gradient-primary);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--border-hover);
+      }
+
+      .card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+      }
+
+      .card p {
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .card-list {
+        list-style: none;
+        margin-top: 1rem;
+      }
+
+      .card-list li {
+        color: var(--text-muted);
+        margin-bottom: 0.5rem;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+
+      .card-list li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      /* Technology Stack */
+      .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 3rem;
+      }
+
+      .tech-item {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .tech-item:hover {
+        transform: translateY(-2px);
+        border-color: var(--primary-color);
+      }
+
+      .tech-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+      }
+
+      .tech-name {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+      }
+
+      .tech-description {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      /* API Endpoints */
+      .endpoint {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+        font-size: 0.9rem;
+      }
+
+      .endpoint-method {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        font-weight: 600;
+        margin-right: 1rem;
+        font-size: 0.8rem;
+      }
+
+      .method-get {
+        background: var(--success-color);
+        color: white;
+      }
+      .method-post {
+        background: var(--primary-color);
+        color: white;
+      }
+      .method-put {
+        background: var(--warning-color);
+        color: white;
+      }
+      .method-patch {
+        background: #8b5cf6;
+        color: white;
+      }
+      .method-delete {
+        background: var(--error-color);
+        color: white;
+      }
+
+      .endpoint-path {
+        color: var(--text-primary);
+      }
+
+      .endpoint-description {
+        color: var(--text-muted);
+        margin-top: 0.5rem;
+      }
+
+      /* Security Features */
+      .security-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .security-item {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .security-item:hover {
+        transform: translateY(-2px);
+        border-color: var(--success-color);
+      }
+
+      .security-icon {
+        font-size: 2.5rem;
+        color: var(--success-color);
+        margin-bottom: 1rem;
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border-color);
+        padding: 3rem 0 2rem;
+        text-align: center;
+      }
+
+      .footer-content {
+        margin-bottom: 2rem;
+      }
+
+      .footer h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .footer p {
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary-color);
+      }
+
+      .footer-bottom {
+        border-top: 1px solid var(--border-color);
+        padding-top: 2rem;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in-up {
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .pulse {
+        animation: pulse 2s infinite;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 1rem;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .hero-logo-image {
+          height: 80px;
+        }
+
+        .logo-image {
+          height: 32px;
+        }
+
+        .logo-text {
+          font-size: 1.25rem;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .api-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .tech-grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .footer-links {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav container">
+        <div class="logo">
+          <img
+            src="https://res.cloudinary.com/dpteqanni/image/upload/v1761255661/mirai-logo_dp6izc.png"
+            alt="Mirai Server"
+            class="logo-image"
+          />
+          <span class="logo-text">Mirai 未来</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#architecture">Architecture</a></li>
+          <li><a href="#api">Endpoints</a></li>
+          <li><a href="#tech">Tech Stack</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+      <div class="container">
+        <div class="hero-content fade-in-up">
+          <div class="hero-logo">
+            <img
+              src="https://res.cloudinary.com/dpteqanni/image/upload/v1761255661/mirai-logo_dp6izc.png"
+              alt="Mirai Server"
+              class="hero-logo-image"
+            />
+          </div>
+          <h1>Mirai 未来</h1>
+          <h2 style="margin-bottom: 16px">Applications Integrator System</h2>
+          <p class="subtitle">
+            Serverless + Microservices Backend for <br />
+            Vocational Orientation Platform
+          </p>
+          <!-- <p class="description">
+            A comprehensive AWS Lambda-based and Microservices API designed to
+            support vocational guidance and career exploration for students in
+            Guatemala and Latin America. Built as a graduation project at
+            Universidad del Valle de Guatemala.
+          </p> -->
+          <div class="cta-buttons">
+            <a href="#api" class="btn btn-primary">
+              <i class="fas fa-code"></i>
+              Explore API
+            </a>
+            <a href="#architecture" class="btn btn-secondary">
+              <i class="fas fa-sitemap"></i>
+              View Architecture
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="section">
+      <div class="container">
+        <h2 class="section-title">Project Overview</h2>
+        <p class="section-subtitle">
+          A comprehensive AWS Lambda-based and Microservices API designed to
+          support vocational guidance and career exploration for students in
+          Guatemala and Latin America. Built as a graduation project at
+          Universidad del Valle de Guatemala.
+        </p>
+
+        <div class="cards-grid">
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>Educational Mission</h3>
+            <p>
+              Designed to help students discover their career paths through
+              data-driven insights and interactive content.
+            </p>
+            <ul class="card-list">
+              <li>Career exploration tools</li>
+              <li>Interactive forums and discussions</li>
+              <li>Personalized recommendations</li>
+              <li>Alumni success stories</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <h3>Serverless Architecture</h3>
+            <p>
+              Built on AWS Lambda with individual functions for each feature,
+              ensuring scalability and cost-effectiveness.
+            </p>
+            <ul class="card-list">
+              <li>Independent Lambda functions</li>
+              <li>Auto-scaling capabilities</li>
+              <li>Pay-per-use pricing</li>
+              <li>High availability</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Security First</h3>
+            <p>
+              Implements multiple layers of security including data encryption,
+              JWT authentication, and traffic encryption.
+            </p>
+            <ul class="card-list">
+              <li>AES-256 encryption for data at rest</li>
+              <li>TLS 1.3 style traffic encryption</li>
+              <li>JWT-based authentication</li>
+              <li>Role-based access control</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Mirai Section -->
+    <section class="section why-mirai-section">
+      <div class="container">
+        <div class="why-mirai-content fade-in-up">
+          <div class="why-mirai-header">
+            <h2 class="section-title">Why Mirai 未来?</h2>
+            <p class="mirai-pronunciation">[ mi-rai ] • Japanese: "Future"</p>
+          </div>
+
+          <div class="mirai-explanation">
+            <p class="mirai-main-text">
+              <strong>Mirai</strong> (未来) means "future" in Japanese. This
+              name embodies our core mission: to shape and empower the future of
+              vocational orientation education across Guatemala and Latin
+              America.
+            </p>
+
+            <div class="mirai-vision-grid">
+              <div class="vision-card">
+                <div class="vision-icon">
+                  <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Building Tomorrow's Professionals</h3>
+                <p>
+                  We believe every student deserves access to intelligent,
+                  personalized guidance that helps them discover their true
+                  calling and potential career paths.
+                </p>
+              </div>
+
+              <div class="vision-card">
+                <div class="vision-icon">
+                  <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Innovation in Education</h3>
+                <p>
+                  By combining AI-powered recommendations, comprehensive
+                  assessments, and modern technology, we're revolutionizing how
+                  students explore and choose their careers.
+                </p>
+              </div>
+
+              <div class="vision-card">
+                <div class="vision-icon">
+                  <i class="fas fa-globe-americas"></i>
+                </div>
+                <h3>Impact Across Latin America</h3>
+                <p>
+                  Starting in Guatemala, our vision extends to empowering
+                  students throughout Latin America with tools to make informed
+                  decisions about their future.
+                </p>
+              </div>
+            </div>
+
+            <div class="mirai-quote">
+              <i class="fas fa-quote-left quote-icon"></i>
+              <p>
+                "The future belongs to those who prepare for it today. Mirai is
+                our contribution to ensuring that every student has the
+                opportunity to build their own future with confidence,
+                knowledge, and the right guidance."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+      <div class="container">
+        <h2 class="section-title">Core Features</h2>
+        <p class="section-subtitle">
+          Comprehensive functionality for vocational guidance and career
+          exploration
+        </p>
+
+        <div class="cards-grid">
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-user-lock"></i>
+            </div>
+            <h3>Authentication System</h3>
+            <p>
+              Secure user management with Clerk integration and role-based
+              access control.
+            </p>
+            <ul class="card-list">
+              <li>User registration and deletion</li>
+              <li>JWT token validation</li>
+              <li>
+                Role-based permissions (admin, teacher, director, student)
+              </li>
+              <li>Secure password handling</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3>Smart Recommendations</h3>
+            <p>
+              AI-powered career recommendations based on quiz results, user
+              preferences, and academic performance.
+            </p>
+            <ul class="card-list">
+              <li>Personalized career suggestions</li>
+              <li>Interest-based matching</li>
+              <li>Academic performance analysis</li>
+              <li>Dynamic recommendation updates</li>
+              <li>Career compatibility scoring</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-clipboard-check"></i>
+            </div>
+            <h3>Vocational Assessment Quiz</h3>
+            <p>
+              Comprehensive quiz system that evaluates student interests,
+              skills, and aptitudes to generate personalized career
+              recommendations.
+            </p>
+            <ul class="card-list">
+              <li>Multi-dimensional assessment questions</li>
+              <li>Interest and aptitude evaluation</li>
+              <li>Skill-based analysis</li>
+              <li>Results storage and tracking</li>
+              <li>Foundation for recommendations</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-compass"></i>
+            </div>
+            <h3>Content Exploration</h3>
+            <p>
+              Dynamic content feed with multiple content types and intelligent
+              filtering.
+            </p>
+            <ul class="card-list">
+              <li>Paginated content feed</li>
+              <li>
+                Multiple content types (career, alumni_story, what_if,
+                short_question)
+              </li>
+              <li>Priority-based sorting</li>
+              <li>User interaction tracking</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-robot"></i>
+            </div>
+            <h3>AI Chat & Questions</h3>
+            <p>
+              Intelligent chat system that answers student questions about
+              careers, education, and vocational guidance with contextual
+              understanding.
+            </p>
+            <ul class="card-list">
+              <li>AI-powered question answering</li>
+              <li>Career guidance conversations</li>
+              <li>Chat history support</li>
+              <li>Context-aware responses</li>
+              <li>Educational resource recommendations</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-comments"></i>
+            </div>
+            <h3>Discussion Forums</h3>
+            <p>
+              Interactive forums for career-related discussions with threaded
+              comments.
+            </p>
+            <ul class="card-list">
+              <li>Forum creation and management</li>
+              <li>Threaded comments and answers</li>
+              <li>Career-specific discussions</li>
+              <li>User participation tracking</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <h3>Career Management</h3>
+            <p>
+              Comprehensive career database with detailed information and
+              insights.
+            </p>
+            <ul class="card-list">
+              <li>Career information retrieval</li>
+              <li>Detailed career profiles</li>
+              <li>Career insights and analytics</li>
+              <li>Salary and employment data</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>User Management</h3>
+            <p>
+              Complete user profile management with saved items and preferences.
+            </p>
+            <ul class="card-list">
+              <li>User profile management</li>
+              <li>Saved items functionality</li>
+              <li>User preferences and tags</li>
+              <li>Admin user management</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Analytics & Insights</h3>
+            <p>
+              Data-driven insights and analytics for better decision making.
+            </p>
+            <ul class="card-list">
+              <li>User interaction analytics</li>
+              <li>Content performance metrics</li>
+              <li>Career recommendation insights</li>
+              <li>Platform usage statistics</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="section">
+      <div class="container">
+        <h2 class="section-title">Architecture & Infrastructure</h2>
+        <p class="section-subtitle">
+          Modern serverless architecture designed for scalability and
+          reliability
+        </p>
+
+        <div class="architecture-diagram fade-in-up">
+          <img
+            src="https://res.cloudinary.com/dpteqanni/image/upload/v1761258376/Mirai_Infrastructure_czanp3.png"
+            alt="Mirai Server Infrastructure Diagram"
+            class="diagram-image"
+          />
+        </div>
+
+        <div class="cards-grid">
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Security & Edge Services</h3>
+            <p>
+              Multi-layered security with Web Application Firewall and global
+              content delivery for optimal performance and protection.
+            </p>
+            <ul class="card-list">
+              <li>AWS Web Application Firewall (WAF)</li>
+              <li>CloudFront CDN for global distribution</li>
+              <li>DDoS protection and filtering</li>
+              <li>Geographic distribution</li>
+              <li>Edge caching optimization</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <h3>API Gateway & Authorization</h3>
+            <p>
+              HTTP API Gateway with dual authorization layers for secure access
+              control and request routing.
+            </p>
+            <ul class="card-list">
+              <li>HTTP API Gateway (AWS)</li>
+              <li>JWT Lambda Authorizer</li>
+              <li>Webhook Authorizer (Signed)</li>
+              <li>Clerk authentication integration</li>
+              <li>Request routing and throttling</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fab fa-aws"></i>
+            </div>
+            <h3>Serverless Functions</h3>
+            <p>
+              Serverless architecture with individual Lambda functions for each
+              feature, ensuring modularity and independent scaling.
+            </p>
+            <ul class="card-list">
+              <li>User management functions</li>
+              <li>Career and exploration functions</li>
+              <li>Forum and interaction functions</li>
+              <li>Authentication functions</li>
+              <li>Analytics and quiz functions</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-server"></i>
+            </div>
+            <h3>Recommendations Microservice</h3>
+            <p>
+              Dedicated EC2-based microservice for AI-powered recommendations,
+              running in a private subnet with VPC connectivity.
+            </p>
+            <ul class="card-list">
+              <li>EC2 instance deployment</li>
+              <li>AI recommendation engine</li>
+              <li>IPv4 private address connectivity</li>
+              <li>VPC Link connectivity</li>
+              <li>Private subnet isolation</li>
+              <li>Scalable compute resources</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-database"></i>
+            </div>
+            <h3>DocumentDB Database</h3>
+            <p>
+              DocumentDB database running on EC2 in a private subnet with
+              MongoDB 5.0 compatibility for flexible data modeling.
+            </p>
+            <ul class="card-list">
+              <li>DocumentDB on EC2 instance</li>
+              <li>MongoDB 5.0 compatibility</li>
+              <li>Private subnet deployment</li>
+              <li>High availability setup</li>
+              <li>Secure data storage</li>
+              <li>IPv4 private address connectivity</li>
+              <li>Rest data encryption with AES-256</li>
+            </ul>
+          </div>
+
+          <div class="card fade-in-up">
+            <div class="card-icon">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <h3>VPC & Network Security</h3>
+            <p>
+              Virtual Private Cloud with private subnets and security groups
+              providing network isolation and secure communication.
+            </p>
+            <ul class="card-list">
+              <li>VPC in Ohio us-east-2 region</li>
+              <li>Private subnets for isolation</li>
+              <li>Security groups configuration</li>
+              <li>Lambda-DocumentDB connectivity</li>
+              <li>Microservice communication</li>
+              <li>NAT Gateway for outbound internet access</li>
+              <li>Route tables for private subnet connectivity</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technology Stack Section -->
+    <section id="tech" class="section">
+      <div class="container">
+        <h2 class="section-title">Technology Stack</h2>
+        <p class="section-subtitle">
+          Modern technologies and frameworks for robust backend development
+        </p>
+
+        <div class="tech-grid">
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fab fa-node-js"></i>
+            </div>
+            <h3 class="tech-name">Node.js</h3>
+            <p class="tech-description">
+              JavaScript runtime for serverless functions
+            </p>
+          </div>
+
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h3 class="tech-name">HonoJS</h3>
+            <p class="tech-description">
+              Fast, lightweight web framework for Lambda functions &
+              microservices
+            </p>
+          </div>
+
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-database"></i>
+            </div>
+            <h3 class="tech-name">DocumentDB</h3>
+            <p class="tech-description">MongoDB-compatible database on EC2</p>
+          </div>
+
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-cube"></i>
+            </div>
+            <h3 class="tech-name">Mongoose ODM</h3>
+            <p class="tech-description">Object Document Mapper for MongoDB</p>
+          </div>
+
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fab fa-aws"></i>
+            </div>
+            <h3 class="tech-name">Lambda</h3>
+            <p class="tech-description">
+              AWS Lambda for serverless compute service
+            </p>
+          </div>
+
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="tech-name">WAF</h3>
+            <p class="tech-description">
+              AWS Web Application Firewall for security
+            </p>
+          </div>
+
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-globe"></i>
+            </div>
+            <h3 class="tech-name">CloudFront</h3>
+            <p class="tech-description">AWS Global CDN for content delivery</p>
+          </div>
+
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <h3 class="tech-name">API Gateway</h3>
+            <p class="tech-description">
+              AWS HTTP API Gateway for API management and routing service
+            </p>
+          </div>
+
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <h3 class="tech-name">VPC</h3>
+            <p class="tech-description">
+              AWS Virtual Private Cloud for network isolation
+            </p>
+          </div>
+
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-server"></i>
+            </div>
+            <h3 class="tech-name">EC2</h3>
+            <p class="tech-description">
+              AWS Elastic Compute Cloud for microservices
+            </p>
+          </div>
+
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-key"></i>
+            </div>
+            <h3 class="tech-name">JWT Authentication</h3>
+            <p class="tech-description">
+              JSON Web Tokens for secure authentication
+            </p>
+          </div>
+
+          <!-- <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <h3 class="tech-name">Crypto.js</h3>
+            <p class="tech-description">
+              Cryptographic library for data encryption
+            </p>
+          </div> -->
+
+          <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="tech-name">Clerk</h3>
+            <p class="tech-description">
+              Clerk integration for user authentication & management
+            </p>
+          </div>
+
+          <!-- <div class="tech-item fade-in-up">
+            <div class="tech-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <h3 class="tech-name">ES6+ Modules</h3>
+            <p class="tech-description">Modern JavaScript module system</p>
+          </div> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Security Features Section -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Security Features</h2>
+        <p class="section-subtitle">
+          Multi-layered security implementation for data protection and user
+          privacy
+        </p>
+
+        <div class="security-grid">
+          <div class="security-item fade-in-up">
+            <div class="security-icon">
+              <i class="fas fa-shield-virus"></i>
+            </div>
+            <h3>Web Application Firewall (WAF)</h3>
+            <p>
+              Advanced AWS WAF protection against multiple attack vectors and
+              malicious traffic patterns.
+            </p>
+            <ul class="card-list">
+              <li>DDoS attack protection and mitigation</li>
+              <li>SQL injection prevention</li>
+              <li>Cross-site scripting (XSS) protection</li>
+              <li>Rate limiting and throttling</li>
+              <li>Geographic restrictions and filtering</li>
+              <li>Bot traffic detection and blocking</li>
+              <li>Custom security rules and policies</li>
+            </ul>
+          </div>
+
+          <div class="security-item fade-in-up">
+            <div class="security-icon">
+              <i class="fas fa-globe-americas"></i>
+            </div>
+            <h3>CloudFront Security</h3>
+            <p>
+              Global CDN with built-in security features for content protection
+              and secure delivery.
+            </p>
+            <ul class="card-list">
+              <li>HTTPS enforcement and SSL/TLS termination</li>
+              <li>Origin access control (OAC)</li>
+              <li>Signed URLs and cookies</li>
+              <li>Geographic restrictions</li>
+              <li>Edge caching security</li>
+              <li>DDoS protection at edge locations</li>
+            </ul>
+          </div>
+
+          <div class="security-item fade-in-up">
+            <div class="security-icon">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <h3>VPC Private Cloud Security</h3>
+            <p>
+              Comprehensive network isolation and security within AWS Virtual
+              Private Cloud for maximum data protection.
+            </p>
+            <ul class="card-list">
+              <li>Private subnet isolation for all services</li>
+              <li>Security groups with least privilege access</li>
+              <li>NAT Gateway for secure outbound internet access</li>
+              <li>Route tables for controlled network traffic</li>
+              <li>VPC Link for secure microservice communication</li>
+              <li>Network ACLs for additional layer protection</li>
+              <li>IPv4 private addressing for internal services</li>
+            </ul>
+          </div>
+
+          <div class="security-item fade-in-up">
+            <div class="security-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <h3>Data Encryption</h3>
+            <p>
+              Traffic (HTTPS) and rest (AES-256) encryption for data protection.
+              And additional encryption for Personal Identifiable Information.
+            </p>
+          </div>
+
+          <div class="security-item fade-in-up">
+            <div class="security-icon">
+              <i class="fas fa-key"></i>
+            </div>
+            <h3>JWT Authentication</h3>
+            <p>
+              Secure token-based authentication with public key verification and
+              role-based access control.
+            </p>
+          </div>
+
+          <div class="security-item fade-in-up">
+            <div class="security-icon">
+              <i class="fas fa-user-shield"></i>
+            </div>
+            <h3>Role-Based Access</h3>
+            <p>
+              Granular permissions system with admin, teacher, director, and
+              student roles.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- API Endpoints Section -->
+    <section id="api" class="section">
+      <div class="container">
+        <h2 class="section-title">API Endpoints</h2>
+        <p class="section-subtitle">
+          HTTPs API Gateway endpoints for all platform functionality
+        </p>
+
+        <div class="api-grid">
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-user-lock"></i> Authentication</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/auth/register</span>
+              <div class="endpoint-description">Register new user</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/auth/update</span>
+              <div class="endpoint-description">Update user info</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/auth/delete</span>
+              <div class="endpoint-description">Delete account</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-users"></i> User Management</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/users</span>
+              <div class="endpoint-description">Get all users</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/users/me</span>
+              <div class="endpoint-description">Get user profile</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-patch">PATCH</span>
+              <span class="endpoint-path">/users/{id}</span>
+              <div class="endpoint-description">Edit user role</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-bookmark"></i> Saved Items</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/users/saved</span>
+              <div class="endpoint-description">Get saved items</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/users/saved</span>
+              <div class="endpoint-description">Save item</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-delete">DELETE</span>
+              <span class="endpoint-path">/users/saved/{id}</span>
+              <div class="endpoint-description">Unsave item</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-chart-line"></i> Analytics</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/analytics</span>
+              <div class="endpoint-description">Get student analytics</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-briefcase"></i> Careers</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/careers</span>
+              <div class="endpoint-description">Get all careers</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/careers/{id}</span>
+              <div class="endpoint-description">Get career details</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-patch">PATCH</span>
+              <span class="endpoint-path">/careers/{id}</span>
+              <div class="endpoint-description">Edit career insights</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-id-card"></i> Cards</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/explore/cards</span>
+              <div class="endpoint-description">Create card</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/explore/cards/{id}</span>
+              <div class="endpoint-description">Get card</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-put">PUT</span>
+              <span class="endpoint-path">/explore/cards/{id}</span>
+              <div class="endpoint-description">Edit card</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-delete">DELETE</span>
+              <span class="endpoint-path">/explore/cards/{id}</span>
+              <div class="endpoint-description">Delete card</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-compass"></i> Feed & Testimonies</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/explore/feed</span>
+              <div class="endpoint-description">Get content feed</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/testimonies</span>
+              <div class="endpoint-description">Get testimonies</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-hand-pointer"></i> Interactions & Likes</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/explore/interactions</span>
+              <div class="endpoint-description">New card interaction</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-patch">PATCH</span>
+              <span class="endpoint-path">/explore/cards/{id}/likes</span>
+              <div class="endpoint-description">Like card</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-patch">PATCH</span>
+              <span class="endpoint-path">/explore/cards/{id}/likes</span>
+              <div class="endpoint-description">Unlike card</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-comments"></i> Forums</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/forums</span>
+              <div class="endpoint-description">Create forum</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/forums</span>
+              <div class="endpoint-description">Get all forums</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/forums/{id}</span>
+              <div class="endpoint-description">Get forum</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-put">PUT</span>
+              <span class="endpoint-path">/forums/{id}</span>
+              <div class="endpoint-description">Edit forum</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-delete">DELETE</span>
+              <span class="endpoint-path">/forums/{id}</span>
+              <div class="endpoint-description">Delete forum</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-comment"></i> Comments</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/forums/{id}/comments</span>
+              <div class="endpoint-description">New comment</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-put">PUT</span>
+              <span class="endpoint-path"
+                >/forums/{id}/comments/{commentId}</span
+              >
+              <div class="endpoint-description">Edit comment</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-delete">DELETE</span>
+              <span class="endpoint-path"
+                >/forums/{id}/comments/{commentId}</span
+              >
+              <div class="endpoint-description">Delete comment</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-reply"></i> Answers</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path"
+                >/forums/{id}/comments/{commentId}/answers</span
+              >
+              <div class="endpoint-description">New answer</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-put">PUT</span>
+              <span class="endpoint-path"
+                >/forums/{id}/comments/{commentId}/answers/{answerId}</span
+              >
+              <div class="endpoint-description">Edit answer</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-delete">DELETE</span>
+              <span class="endpoint-path"
+                >/forums/{id}/comments/{commentId}/answers/{answerId}</span
+              >
+              <div class="endpoint-description">Delete answer</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-clipboard-check"></i> Quiz</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path">/quiz/results</span>
+              <div class="endpoint-description">Get quiz results</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-delete">DELETE</span>
+              <span class="endpoint-path">/quiz/results</span>
+              <div class="endpoint-description">Delete results</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-lightbulb"></i> Recommendations - Quiz</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-get">GET</span>
+              <span class="endpoint-path"
+                >/recommendations/initial-test/items</span
+              >
+              <div class="endpoint-description">Get initial quiz items</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path"
+                >/recommendations/initial-test/calculate</span
+              >
+              <div class="endpoint-description">Calculate results</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-message"></i> Recommendations - Chat</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/recommendations/guide/ask</span>
+              <div class="endpoint-description">Question empty</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/recommendations/guide/ask</span>
+              <div class="endpoint-description">Question with history</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3><i class="fas fa-magic"></i> Recommendations - Cards</h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/recommendations/generate/card</span>
+              <div class="endpoint-description">Generate survey card</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path">/recommendations/generate/card</span>
+              <div class="endpoint-description">Generate what if card</div>
+            </div>
+          </div>
+
+          <div class="card fade-in-up">
+            <h3>
+              <i class="fas fa-question-circle"></i> Recommendations - Questions
+            </h3>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path"
+                >/recommendations/career/similar/{id}</span
+              >
+              <div class="endpoint-description">Similar career</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path"
+                >/recommendations/generate/mini-inform</span
+              >
+              <div class="endpoint-description">Mini inform</div>
+            </div>
+            <div class="endpoint">
+              <span class="endpoint-method method-post">POST</span>
+              <span class="endpoint-path"
+                >/recommendations/generate/career-combination/{id}</span
+              >
+              <div class="endpoint-description">Career combination</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <h3>Mirai 未来</h3>
+          <p>
+            Applications Integrator System for Vocational Orientation Platform
+          </p>
+          <p>Developed by Daniel Gómez - Universidad del Valle de Guatemala</p>
+
+          <div class="footer-links">
+            <a href="#overview">Overview</a>
+            <a href="#features">Features</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#api">API Documentation</a>
+            <a href="#tech">Technology Stack</a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Mirai 未来 Graduation Work Project - Universidad del
+            Valle de Guatemala
+          </p>
+          <p>Built for vocational guidance in Guatemala and Latin America</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Add fade-in animation on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("fade-in-up");
+          }
+        });
+      }, observerOptions);
+
+      // Observe all cards and sections
+      document
+        .querySelectorAll(".card, .tech-item, .security-item")
+        .forEach((el) => {
+          observer.observe(el);
+        });
+
+      // Add pulse animation to CTA buttons
+      document.querySelectorAll(".btn-primary").forEach((btn) => {
+        btn.addEventListener("mouseenter", function () {
+          this.classList.add("pulse");
+        });
+        btn.addEventListener("mouseleave", function () {
+          this.classList.remove("pulse");
+        });
+      });
+    </script>
+  </body>
+</html>

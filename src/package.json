@@ -1,0 +1,14 @@
+{
+  "name": "mirai-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AWS Lambda serverless backend for Mirai",
+  "private": true,
+  "scripts": {
+    "lint": "eslint features/ middleware/ utils/",
+    "lint:fix": "eslint features/ middleware/ utils/ --fix"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
+}
